@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/newgreen_api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_mapper/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_passort_service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_passport/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_rabbitma_receive/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_rabbitmq_send/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_seckill_service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/newgreen_seckill_web/src/main/java" charset="UTF-8" />
+  </component>
+</project>

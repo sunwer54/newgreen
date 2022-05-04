@@ -1,0 +1,15 @@
+spring:
+  #关联mapper模块和redis模块和send模块的配置文件
+  profiles:
+    active: mapper,redis,send
+  #配置当前服务器名称
+  application:
+    name: seckill-service
+  cloud:
+    nacos:
+      discovery:
+        #配置nacos注册中心
+        server-addr: localhost:8848
+#当前服务器端口
+server:
+  port: 8091

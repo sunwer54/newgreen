@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: passport-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  profiles:
+    active: mapper
+server:
+  port: 8090

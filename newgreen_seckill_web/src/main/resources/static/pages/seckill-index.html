@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>美团秒杀-正品秒杀！</title>
+	<link rel="icon" href="./img/favicon.ico">
+
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+	<link rel="stylesheet" type="text/css" href="./css/all.css" />
+	<link rel="stylesheet" type="text/css" href="./css/pages-seckill-index.css" />
+	<script src="./js/moment.min.js"></script>
+</head>
+
+<body>
+	<!-- 头部栏位 -->
+	<div id="app">
+	<!--页面顶部-->
+	<div id="nav-bottom">
+		<!--顶部-->
+		<div class="nav-top">
+			<div class="top">
+				<div class="py-container">
+					<div class="shortcut">
+						<ul class="fl">
+							<li class="f-item">美团欢迎您！<b>{{username}}</b></li>
+							<li class="f-item" v-if="username ==''">请
+								<a href="http://localhost:8081/login" target="_blank">登录</a>
+								<span>
+									<a href="register.html" target="_blank">免费注册</a>
+								</span>
+							</li>
+						</ul>
+						<div class="fr typelist">
+							<ul class="types">
+								<li class="f-item">
+									<span>我的订单</span>
+								</li>
+
+								<li class="f-item">
+									<span>
+										<a href="cart.html" target="_blank">手机APP</a>
+									</span>
+								</li>
+								<li class="f-item">
+									<span>
+										<a href="home.html" target="_blank">我的美团</a>
+									</span>
+								</li>
+
+								<li class="f-item">
+									<span>关注美团</span>
+								</li>
+								<li class="f-item">
+									<span>
+										<a href="cooperation.html" target="_blank">合作招商</a>
+									</span>
+								</li>
+								<li class="f-item">
+									<span>
+										<a href="shoplogin.html" target="_blank">商家后台</a>
+									</span>
+								</li>
+								<li class="f-item">
+									<span>网站导航</span>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!--头部-->
+			<div class="header">
+				<div class="py-container">
+					<div class="yui3-g Logo">
+						<div class="yui3-u Left logoArea">
+							<a class="logo-bd" title="美团" href="index.html" target="_blank" ></a>
+						</div>
+						<div class="yui3-u Rit searchArea">
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="py-container index" >
+		<!--banner-->
+		<div class="banner">
+			<img src="./img/_/banner.png" class="img-responsive" alt="">
+		</div>
+		<!--秒杀时间-->
+		<div class="sectime" >
+			<div v-for="(item,index) in menus" :class="['item-time',ctime == index ? 'active':'']" @click="ctime=index;searchList(item)">
+				<div class="time-clock">{{item | dataFormat('hh:mm')}}</div>
+				<div class="time-state-on"  v-if="index==0">
+					<span class="on-text">快抢中</span>
+					<span class="on-over">距离结束：{{timechange(alltimes[index])}}</span>
+
+				</div>
+				<!--即将开始-->
+				<div class="time-state-on" v-if="index>0">
+					<span class="on-text">即将开始</span>
+					<span class="on-over">距离开始: {{timechange(alltimes[index])}}</span>
+				</div>
+			</div>
+
+		</div>
+		<!--商品列表-->
+		<div class="goods-list">
+			<ul class="seckill" id="seckill">
+				<li class="seckill-item" v-for="item in goodslist" :key="item">
+					<div class="pic">
+						<img src="./img/_/list.jpg" alt=''>
+					</div>
+					<div class="intro">
+						<span>{{item.title}}</span>
+					</div>
+					<div class='price'>
+						<b class='sec-price'>￥{{item.costPrice}}</b>
+						<b class='ever-price'>￥{{item.price}}</b>
+					</div>
+					<div class='num'>
+						<div>已售{{item.num-item.stockCount}}</div>
+						<div class='progress'>
+							<div class='sui-progress progress-danger'>
+
+								<span :style="'width:'+(((item.num-item.stockCount)/item.num)*100)+'%'" class='bar'></span>
+							</div>
+						</div>
+						<div>剩余
+							<b class='owned'>{{item.stockCount}}</b>件</div>
+					</div>
+					<a class='sui-btn btn-block btn-buy' :href='targetHref(item.id,item.startTime)' target='_blank'>立即抢购</a>
+				</li>
+			</ul>
+		</div>
+		<div class="cd-top">
+			<div class="top">
+				<img src="./img/_/gotop.png" />
+				<b>秒杀中</b>
+			</div>
+			<div class="code" id="code">
+				<span>
+					<img src="./img/_/code.png" />
+				</span>
+			</div>
+			<div class="erweima">
+				<img src="./img/_/erweima.jpg" alt="">
+				<s></s>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!--回到顶部-->
+
+	<!-- 底部栏位 -->
+	<!--页面底部-->
+	<div class="clearfix footer">
+		<div class="py-container">
+			<div class="footlink">
+				<div class="Mod-service">
+					<ul class="Mod-Service-list">
+						<li class="grid-service-item intro  intro1">
+
+							<i class="serivce-item fl"></i>
+							<div class="service-text">
+								<h4>正品保障</h4>
+								<p>正品保障，提供发票</p>
+							</div>
+
+						</li>
+						<li class="grid-service-item  intro intro2">
+
+							<i class="serivce-item fl"></i>
+							<div class="service-text">
+								<h4>正品保障</h4>
+								<p>正品保障，提供发票</p>
+							</div>
+
+						</li>
+						<li class="grid-service-item intro  intro3">
+
+							<i class="serivce-item fl"></i>
+							<div class="service-text">
+								<h4>正品保障</h4>
+								<p>正品保障，提供发票</p>
+							</div>
+
+						</li>
+						<li class="grid-service-item  intro intro4">
+
+							<i class="serivce-item fl"></i>
+							<div class="service-text">
+								<h4>正品保障</h4>
+								<p>正品保障，提供发票</p>
+							</div>
+
+						</li>
+						<li class="grid-service-item intro intro5">
+
+							<i class="serivce-item fl"></i>
+							<div class="service-text">
+								<h4>正品保障</h4>
+								<p>正品保障，提供发票</p>
+							</div>
+
+						</li>
+					</ul>
+				</div>
+				<div class="clearfix Mod-list">
+					<div class="yui3-g">
+						<div class="yui3-u-1-6">
+							<h4>购物指南</h4>
+							<ul class="unstyled">
+								<li>购物流程</li>
+								<li>会员介绍</li>
+								<li>生活旅行/团购</li>
+								<li>常见问题</li>
+								<li>购物指南</li>
+							</ul>
+
+						</div>
+						<div class="yui3-u-1-6">
+							<h4>配送方式</h4>
+							<ul class="unstyled">
+								<li>上门自提</li>
+								<li>211限时达</li>
+								<li>配送服务查询</li>
+								<li>配送费收取标准</li>
+								<li>海外配送</li>
+							</ul>
+						</div>
+						<div class="yui3-u-1-6">
+							<h4>支付方式</h4>
+							<ul class="unstyled">
+								<li>货到付款</li>
+								<li>在线支付</li>
+								<li>分期付款</li>
+								<li>邮局汇款</li>
+								<li>公司转账</li>
+							</ul>
+						</div>
+						<div class="yui3-u-1-6">
+							<h4>售后服务</h4>
+							<ul class="unstyled">
+								<li>售后政策</li>
+								<li>价格保护</li>
+								<li>退款说明</li>
+								<li>返修/退换货</li>
+								<li>取消订单</li>
+							</ul>
+						</div>
+						<div class="yui3-u-1-6">
+							<h4>特色服务</h4>
+							<ul class="unstyled">
+								<li>夺宝岛</li>
+								<li>DIY装机</li>
+								<li>延保服务</li>
+								<li>品优购E卡</li>
+								<li>品优购通信</li>
+							</ul>
+						</div>
+						<div class="yui3-u-1-6">
+							<h4>帮助中心</h4>
+							<img src="./img/wx_cz.jpg">
+						</div>
+					</div>
+				</div>
+				<div class="Mod-copyright">
+					<ul class="helpLink">
+						<li>关于我们
+							<span class="space"></span>
+						</li>
+						<li>联系我们
+							<span class="space"></span>
+						</li>
+						<li>关于我们
+							<span class="space"></span>
+						</li>
+						<li>商家入驻
+							<span class="space"></span>
+						</li>
+						<li>营销中心
+							<span class="space"></span>
+						</li>
+						<li>友情链接
+							<span class="space"></span>
+						</li>
+						<li>关于我们
+							<span class="space"></span>
+						</li>
+						<li>营销中心
+							<span class="space"></span>
+						</li>
+						<li>友情链接
+							<span class="space"></span>
+						</li>
+						<li>关于我们</li>
+					</ul>
+					<p>地址：北京市亦庄创业大道美团大厦 邮编：421001 电话：400-618-1234 传真：010-829123456</p>
+					<p>湘ICP备080012234号京公网安备110108001234</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--页面底部END-->
+	<!-- 引入组件库 -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+	<script src="https://cdn.bootcss.com/element-ui/2.5.4/index.js"></script>
+	<script src="js/axios.js"></script>
+	<script>
+
+		var app = new Vue({
+			el: '#app',
+			data:{
+				menus:[],//存储有所的时间菜单
+				ctime:0, //记录当前被选中的菜单
+				alltimes:[], //记录每个菜单的倒计时差值
+				goodslist:[],
+				username:''
+
+			},
+			methods:{
+				//每个时区查询商品:Date --->20210729格式
+				searchList(time){
+					//先转换时间
+					time = moment(time).format('YYYYMMDDHH');
+					//发送请求数据
+					axios.get('/seckill/goods/list?time='+time).then(function (response) {
+						//将数据绑定到变量中,并页面显示
+						app.goodslist=response.data;
+						// alert(JSON.stringify(app.goodslist))
+
+					})
+				},
+				//查询时间菜单
+				loadMenus:function () {
+					axios.get('/seckill/goods/menus').then(function (response) {
+						app.menus=response.data;
+						//调用查询对应菜单的商品
+						app.searchList(app.menus[0]);
+
+						//给alltimes里面设置真实的时间
+						//第1个时差：第2个抢购开始时间-当前时间，距离结束时间
+						// 第2个时差：第2个抢购开始时间-当前时间，距离开始时间
+						// 第3个时差：第3个抢购开始时间-当前时间，距离开始时间
+						// 第4个时差：第4个抢购开始时间-当前时间，距离开始时间
+						// 第5个时差：第5个抢购开始时间-当前时间，距离开始时间
+						for(var i=0;i<app.menus.length;i++){
+							//距离结束
+							if(i==0){
+								app.alltimes[i]=new Date(app.menus[i+1])-new Date();
+							}else {  //距离开始
+								app.alltimes[i]=new Date(app.menus[i])-new Date();
+							}
+						}
+						//倒计时的实现
+						setInterval(function () {
+							//让每一个时间 -1000
+							for(var i=0;i<app.alltimes.length;i++){
+								//获取当前元素在数组中的下标
+								var alltimesIndex = app.alltimes.indexOf(app.alltimes[i]);
+								//修改数组中每个元素的值
+								app.alltimes.splice(alltimesIndex,1,app.alltimes[i]-1000);
+							}
+							//当倒计时为0时刷新当前页面
+							if(app.alltimes[1] ==0){
+								location.reload();
+							}
+						}
+						,1000)
+					});
+				},
+				//将毫秒转换成时分秒
+				timechange:function(num) {
+					//1秒=1000毫秒
+					var oneSecond = 1000;
+					var oneMinute=oneSecond*60;
+					var oneHour=oneMinute*60
+					//小时
+					var hours =Math.floor(num/oneHour);
+					//分钟
+					var minutes=Math.floor((num%oneHour)/oneMinute);
+					//秒
+					var seconds=Math.floor((num%oneMinute)/oneSecond);
+					//拼接时间格式
+					var str = hours+':'+minutes+':'+seconds;
+					return str;
+				},
+				//详情页跳转
+				targetHref(id,time){
+					//先转换时间
+					time = moment(time).format('YYYYMMDDHH');
+					return '/seckill-item?time='+time+'&id='+id;
+				},
+				//获取登录的用户信息
+				getUser(){
+					//根据ID查询商品详情
+					axios.post('/getuser').then(function (response) {
+						app.username = response.data;
+					});
+				},
+			},
+
+			mounted:function () {
+				 this.getUser();
+				 this.loadMenus();
+			},
+			// 定义一个局部的过滤器，格式化当前时间
+			filters: {
+				dataFormat (value, fmt) {
+					let getDate = new Date(value)
+					let o = {
+						'M+': getDate.getMonth() + 1,
+						'd+': getDate.getDate(),
+						'h+': getDate.getHours(),
+						'm+': getDate.getMinutes(),
+						's+': getDate.getSeconds(),
+						'q+': Math.floor((getDate.getMonth() + 3) / 3),
+						S: getDate.getMilliseconds()
+					}
+					if (/(y+)/.test(fmt)) {
+						fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+					}
+					for (let k in o) {
+						if (new RegExp('(' + k + ')').test(fmt)) {
+							fmt = fmt.replace(
+									RegExp.$1,
+									RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
+							)
+						}
+					}
+					return fmt
+				}
+			},
+
+		})
+	</script>
+
+
+
+</body>
+
+</html>

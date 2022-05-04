@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.newgreen</groupId>
+    <artifactId>newgreen_seckill</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>newgreen_api</module>
+        <module>newgreen_pojo</module>
+        <module>newgreen_mapper</module>
+        <module>newgreen_commons</module>
+        <module>newgreen_redis</module>
+        <module>newgreen_rabbitmq_send</module>
+        <module>newgreen_rabbitma_receive</module>
+        <module>newgreen_seckill_service</module>
+        <module>newgreen_seckill_web</module>
+        <module>newgreen_passport</module>
+        <module>newgreen_passort_service</module>
+    </modules>
+    <!-- Spring Boot的父项目，声明所有Spring Boot相关版本 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <!--统一版本控制-->
+    <properties>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <com-alibaba-cloud.version>2.2.0.RELEASE</com-alibaba-cloud.version>
+        <com-alibaba-cloud-web.version>2.2.5.RELEASE</com-alibaba-cloud-web.version>
+        <lombok.version>1.18.20</lombok.version>
+        <jstl.version>1.2</jstl.version>
+        <jasper.version>9.0.31</jasper.version>
+        <sentinel.version>2.2.1.RELEASE</sentinel.version>
+        <druid-springboot-version>1.1.10</druid-springboot-version>
+        <seata-version>2.2.0.RELEASE</seata-version>
+        <dubbo-version>2.7.5</dubbo-version>
+        <curator-version>2.12.0</curator-version>
+        <openfeign-version>2.2.9.RELEASE</openfeign-version>
+        <mybatis-springboot-version>2.1.1</mybatis-springboot-version>
+        <mysql-driver-version>5.1.48</mysql-driver-version>
+        <pagehelper-springboot-version>1.2.13</pagehelper-springboot-version>
+        <page-version>5.1.11</page-version>
+        <httpclient-version>4.5.10</httpclient-version>
+        <spring-version>2.2.5.RELEASE</spring-version>
+        <spring-session-version>2.2.2.RELEASE</spring-session-version>
+    </properties>
+    <!--坐标统一管理-->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring boot web开发启动器-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${com-alibaba-cloud-web.version}</version>
+            </dependency>
+            <!--服务注册发现 discovery-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+                <version>${com-alibaba-cloud.version}</version>
+            </dependency>
+            <!--服务注册发现 openfeign-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${openfeign-version}</version>
+            </dependency>
+            <!--sentinel-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <!--seata-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <version>${seata-version}</version>
+            </dependency>
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- jsp解析器 -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${jstl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+                <version>${jasper.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator-version}</version>
+            </dependency>
+            <!-- druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-springboot-version}</version>
+            </dependency>
+            <!-- mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-springboot-version}</version>
+            </dependency>
+            <!--mysql-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-driver-version}</version>
+            </dependency>
+            <!-- pagehelper分页插件-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-springboot-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${page-version}</version>
+            </dependency>
+            <!-- httpclient跨域访问-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
+            </dependency>
+            <!-- java mail 邮件-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <!-- elasticsearch-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <!-- rabbitmq-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <!-- redis-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <!-- Spring Session 分布式事务 ，在登录时使用 -->
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>${spring-session-version}</version>
+            </dependency>
+            <!-- spring-session -->
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-core</artifactId>
+                <version>${spring-session-version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

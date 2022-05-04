@@ -1,0 +1,15 @@
+spring:
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .html
+  profiles:
+    active: redis
+  application:
+    name: passport
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+server:
+  port: 8081
